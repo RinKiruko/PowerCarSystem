@@ -1,0 +1,19 @@
+<ul class="ProductCartList">	
+	{% for Product in ShoppingList %}
+		<li id="{{ Product.0.id }}" class="ProductItem">
+			<div class="description">
+				<img src="{{ MEDIA_URL }}{{ Product.0.main_image }}" width="50px" height="50px">				
+				<p class="ProductName">{{ Product.0.title}}</p>
+			</div>
+		
+			<section class="control">	
+				<button class="IncreaseButton" value="{{Product.0.id}}"><img class="Sprite Increment"></button>
+				<input class="productAmount" type="number" id="SetAmount" value='{{ Product.1 }}'>
+				<button class="DecreaseButton" value="{{Product.0.id}}"><img class="Sprite Decrement"></button>
+				<button class="DeleteButton" value="{{Product.0.id}}"><img class="Sprite Delete"></button>
+				<p class="Price">{{Product.0.price}} p.</p>
+			</section>
+		</li>
+	{% endfor %}
+</ul>
+<a href="../cart/checkcartandorder">Перейти в корзину</a>

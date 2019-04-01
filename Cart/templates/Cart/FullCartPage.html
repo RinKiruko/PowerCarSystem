@@ -1,0 +1,47 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<link rel="stylesheet" href="FullCartPage.css">
+	<meta charset="UTF-8">
+	<title>Корзина</title>
+</head>
+<body>
+	<ul class="ProductCartList">	
+	{% for Product in ShoppingList %}
+		<li id="Product-{{ Product.0.id }}" class="ProductItem">
+			<div class="description">
+				<img src="{{ MEDIA_URL }}{{ Product.0.main_image }}" width="50px" height="50px">				
+				<p class="ProductName">{{ Product.0.title}}</p>
+			</div>
+		
+			<section class="control">	
+				<button class="IncreaseButton" value="{{Product.0.id}}"><img class="Sprite Increment"></button>
+				<input class="productAmount" type="number" id="SetAmount" value='{{ Product.1 }}'>
+				<button class="DecreaseButton" value="{{Product.0.id}}"><img class="Sprite Decrement"></button>
+				<button class="DeleteButton" value="{{Product.0.id}}"><img class="Sprite Delete"></button>
+				<p class="Price">{{Product.2}} p.</p>
+			</section>
+		</li>
+	{% endfor %}
+</ul>
+	{% if OrderForm %}
+		<form action="/createorder/{% if AccountType == 'Individual' %}
+		individual/{% else %}organization/{% endif %}" method="POST">
+			{% csrf_token %}
+			{{OrderForm}}
+		</form>
+	{% else %}
+		<form action="/createorder/organization" method="POST" hidden>
+			{% csrf_token %}
+			{{OrganizationOrderForm}}
+		</form>
+		<form action="/createorder/individual/" method="POST" hidden>
+			{% csrf_token %}
+			{{IndividualOrderForm}}
+		</form>
+	{% endif %}
+	<script src="{% static "Cart/JS/FullPageCartService.js" %}"></script>
+	<script src="{% static "Cart/JS/jquery.js" %}"></script>
+</body>
+</html>
