@@ -39,31 +39,20 @@ class CategoryGroup(models.Model):
 class Good(models.Model):
     Title = models.CharField(verbose_name=u'Название', unique=True,
                              max_length=100, default=u'Без навзания')
-    UrlHash = models.CharField(null=True, blank=True, max_length=70, unique=True)
-    Manufacturer = models.ForeignKey('Catalog.manufacturer', verbose_name=u'Производитель', on_delete=models.CASCADE,
-                                     null=True, related_name='goods')
-    Chapter = models.ForeignKey('Catalog.Chapter', null=True, verbose_name=u'Раздел',on_delete=models.CASCADE,
-                                related_name='goods')
+    UrlHash = models.CharField(null=True, blank=True, max_length=70, unique=True)        
     Category = models.ForeignKey('Catalog.category', verbose_name=u'Категория', on_delete=models.CASCADE, null=True,
                                  related_name='goods')
-    Vendor_code = models.CharField(unique=True, null=True, verbose_name=u'Артикул', max_length=50)
-
     Characteristics = JSONField(verbose_name=u'Характеристики товара', null=True,
-                                  blank=True, default=dict)
-
+                                blank=True, default=dict)
     Price = models.IntegerField(verbose_name=u'Цена', null=True, blank=True)
-    Product_units = models.ForeignKey('Catalog.Product_units', on_delete=models.CASCADE,
-                                      verbose_name=u'единицы', help_text=u'Единицы в которых измеряется товар',
-                                      null=True)
-
     Description = models.TextField(verbose_name=u'Описание', null=True)
-
     Main_image = models.ImageField(verbose_name=u'Главная фотография товара',
                                    help_text=u'Эта фотография будет отображаться в карточке товара',
                                    upload_to=generate_path, null=True)
     Images = ArrayField(models.ImageField(upload_to=generate_path, blank=True, null=True),
                         verbose_name='Галерея')
-
+    
+    #SEO fields block
     Page_keywords = ArrayField(models.CharField(max_length=50), null=True,
                                help_text=u'Cлова и словосочетания описывающие содержимое страницы(Необходимо для SEO оптимизации)')
 
