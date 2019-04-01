@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'Ordering.apps.OrderingConfig',
     'Filtration.apps.FiltrationConfig',
     'Accounts.apps.AccountsConfig',
-    'Cart.apps.CartConfig',
+    'Catalog.apps.CatalogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
