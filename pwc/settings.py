@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'authtools',
+    'Cart.apps.CartConfig',
     'Ordering.apps.OrderingConfig',
     'Filtration.apps.FiltrationConfig',
     'Accounts.apps.AccountsConfig',

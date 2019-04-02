@@ -3,7 +3,6 @@ from hashlib import md5
 from django.conf import settings
 
 
-@staticmethod
 def generate_path(instance, filename):
     ext = filename.rsplit('.', 1)[-1]
     h = md5(str(filename).encode()).hexdigest()
