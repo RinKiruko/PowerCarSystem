@@ -6,7 +6,8 @@ class Filter(models.Model):
     Attribute = models.OneToOneField('Catalog.Attribute', on_delete=models.CASCADE,
                                      verbose_name='Характеристика товара', 
                                      help_text='Характеристика для которой создается фильтр',
-                                     related_name='filter')
+                                     related_name='filter',
+                                     null=True)
     Type = models.CharField(max_length=50,null=True)
     def save(self, *args, **kwargs):
         self.Type = kwargs['update_fields']['Type']

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import CategoryGroup, Category, Good
+from Filtration.models import Filter
 from Filtration.views import filter_goods
 
 
@@ -16,15 +17,17 @@ def getAllGoods(request):
 def getGoodsSortedByGroups(request, group_title):
     RequestedGroup = CategoryGroup.objects.filter(Title=group_title)
     RelatedWithReqGroupCategories = RequestedGroup.categories.all()
-    Goods = Good.objects.filter(Category__in=RelatedWithReqGroupCategories
+    Goods = Good.objects.filter(Category__in=RelatedWithReqGroupCategories)
     
     context['Goods'] = Goods
     return render(request, 'Catalog/catalog.html', context)
 
 def getGoodsSortedByCategory(request, category_title):
     RequestedCategory = Category.objects.filter(Title=category_title)
+    CharacteristicsIDs = RequestedCategory.characteristics.all().value('id')
+    Filters = Filter.objects.filter(id__in=CharacteristicsIDs)
     Goods = RequestedCategory.goods.all()
-
+    context['Filters'] = Filters
     context['Goods'] = Goods
     return render(request, 'Catalog/catalog.html', context)
 

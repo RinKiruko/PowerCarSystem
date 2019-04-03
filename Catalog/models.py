@@ -68,7 +68,8 @@ class Good(models.Model):
 		('Sold','Продано'),
 	)
 	State = models.CharField(max_length=50, choices=States, verbose_name='Наличиe:', null=True)
-	PublishedDate = models.DateField(auto_now_add=True)
+	PublishedDate = models.DateField(auto_now_add=True, null=True)
+	
 	class Meta:
 		verbose_name = "Товар"
 		verbose_name_plural = "Товары"
@@ -80,10 +81,10 @@ class Good(models.Model):
 		return self.Title
 
 	def save(self, *args, **kwargs):
-		if self.UrlHash is None:
-			hash_for_good = md5(self.Title.encode())
-			hash_for_good.update(self.Category.Title.encode())
-			self.UrlHash = hash_for_good.hexdigest()
+		# if self.UrlHash is None:
+		# 	hash_for_good = md5(self.Title.encode())
+		# 	hash_for_good.update(self.Category.Title.encode())
+		# 	self.UrlHash = hash_for_good.hexdigest()
 		super().save(*args, **kwargs)
 
 class Attribute(models.Model):
