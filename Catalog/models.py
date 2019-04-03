@@ -25,7 +25,7 @@ class Category(models.Model):
 
 
 class CategoryGroup(models.Model):
-	Title = models.CharField(max_length=50, verbose_name='Название',null=True)
+	Title = models.CharField(max_length=50, verbose_name='Название', null=True, unique=True)
 	TranslitTitle = models.CharField(max_length=50,null=True)
 
 	def __str__(self):

@@ -1,6 +1,7 @@
 from django.db import models
 
 class Filter(models.Model):
+    VerboseTitle = models.CharField(max_length=50, verbose_name='Название фильтра') 
     Title = models.CharField(max_length=50)
     Attribute = models.OneToOneField('Catalog.Attribute', on_delete=models.CASCADE,
                                      verbose_name='Характеристика товара', 
@@ -15,7 +16,6 @@ class Filter(models.Model):
         self.Title
 
     class Meta:
-        db_table = ''
         managed = True
         verbose_name = 'Filter'
         verbose_name_plural = 'Filters'
