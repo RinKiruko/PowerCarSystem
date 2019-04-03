@@ -68,7 +68,7 @@ class Good(models.Model):
 		('Sold','Продано'),
 	)
 	State = models.CharField(max_length=50, choices=States, verbose_name='Наличиe:', null=True)
-
+	PublishedDate = models.DateField(auto_now_add=True)
 	class Meta:
 		verbose_name = "Товар"
 		verbose_name_plural = "Товары"

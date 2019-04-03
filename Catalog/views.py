@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import CategoryGroup, Category, Good
 
 AllGroups = CategoryGroup.objects.all()
-AllGoods = Good.objects.all().order_by(pub_date)
+AllGoods = Good.objects.all().order_by('PublishedDate')
 context = {
     'CategoryGroups': AllGroups,
     'Goods' : AllGoods
