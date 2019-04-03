@@ -81,10 +81,10 @@ class Good(models.Model):
 		return self.Title
 
 	def save(self, *args, **kwargs):
-		# if self.UrlHash is None:
-		# 	hash_for_good = md5(self.Title.encode())
-		# 	hash_for_good.update(self.Category.Title.encode())
-		# 	self.UrlHash = hash_for_good.hexdigest()
+		if self.UrlHash is None:
+			hash_for_good = md5(self.Title.encode())
+			hash_for_good.update(self.Category.Title.encode())
+			self.UrlHash = hash_for_good.hexdigest()
 		super().save(*args, **kwargs)
 
 class Attribute(models.Model):

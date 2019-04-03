@@ -1,8 +1,9 @@
+import re
+from collections import namedtuple
 from django.shortcuts import render
 from .models import CategoryGroup, Category, Good
 from Filtration.models import Filter
-from Filtration.views import filter_goods
-
+from Filtration.views import toFilter
 
 AllGroups = CategoryGroup.objects.all()
 AllGoods = Good.objects.all().order_by('PublishedDate')
@@ -33,10 +34,16 @@ def getGoodsSortedByCategory(request, category_title):
 
 def getFilteredGoods(request, group_title, category_title):
     RequestedGroup = Group.objects.get(Title=group_title)
-    RequestedCategory = RequestedGroup.categories.filter(Title=category_title)
-    RelatedGoodsWithReqCategory = RequestedCategory.goods.all()
+    RequestedCategory = RequestedGroup.objects.get(Title=category_title)
+    GoodsToSorted = RequestedCategory.goods.all()
     if request.GET is not None:
-        Filters= request.GET.copy()
-        Goods = filter_goods(**Filters)
-        context['Goods'] = Goods
+        SerializedFilter = namedtuple('Filter',['CharacteristicName','Modificator','LookupValue'])
+        GoodLookups = []
+        for field_name in request.GET:
+            SplittedFieldName= field_name.split('__')            
+            if SplittedFieldName[0] == 'Characteristic':
+                GoodLookups.append(SerializedFilter(SplittedFieldName[1], 
+                                                    SplittedFieldName[2],
+                                                    request.GET[field_name]))
+        context['Goods'] = toFilter(GoodsToSorted, GoodLookups)
     return render(request, 'Catalog/catalog.html', context)
